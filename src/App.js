@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [word, setWord] = useState('');
+  const [definition , setDefinition ] = useState(null)
+
+  const dictionary = [
+    {
+      word: "React",
+      meaning: "A JavaScript library for building user interfaces.",
+    },
+
+    { word: "Component", meaning: "A reusable building block in React." },
+
+    { word: "State", meaning: "An object that stores data for a component." },
+  ];
+
+  const handleSearch=()=>{
+  const wordPresent =  dictionary.filter((item)=>{return item.word.toLowerCase() === word.toLowerCase()})
+    console.log(wordPresent);
+
+    if(wordPresent.length > 0){
+      let ans = wordPresent[0].meaning;
+      setDefinition(ans);
+    }else{
+      setDefinition("Word not found in the dictionary.")
+    }
+
+  }
+
+
+
+
+  return <>
+  <h1>Dictionary App</h1>
+  
+  <input type="text" onChange={(e)=>setWord(e.target.value)}></input>
+  <button onClick={handleSearch}>Search</button>
+  <h3>Definition:</h3> <p>{definition}</p>
+  
+  
+  
+  
+  </>;
 }
 
 export default App;
